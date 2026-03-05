@@ -1,1009 +1,920 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raytrix — Premium Digital Solutions</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VizzTweaks — Premium Console Tweaks</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030a0f;
+  --card:#060f18;
+  --card2:#091520;
+  --blue:#00b4ff;
+  --cyan:#00d4ff;
+  --glow:rgba(0,180,255,.18);
+  --text:#6a8fa8;
+  --bright:#dff0ff;
+  --muted:#0d2033;
+  --border:rgba(0,180,255,.08);
+  --r:16px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.65;overflow-x:hidden}
 
-    :root {
-      --bg: #0a0d18;
-      --surface: #111528;
-      --surface2: #161b30;
-      --blue: #3b82f6;
-      --blue-light: #60a5fa;
-      --blue-glow: rgba(59,130,246,0.25);
-      --text: #e8eaf0;
-      --muted: #7c839e;
-      --border: rgba(255,255,255,0.07);
-      --radius: 16px;
-    }
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:998;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.022}
 
-    html { scroll-behavior: smooth; }
+.amb{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.amb span{position:absolute;border-radius:50%;filter:blur(100px)}
+.a1{top:-15%;right:-10%;width:800px;height:800px;background:radial-gradient(circle,rgba(0,180,255,.05),transparent 65%);animation:d1 18s ease-in-out infinite alternate}
+.a2{bottom:-20%;left:-10%;width:700px;height:700px;background:radial-gradient(circle,rgba(0,80,140,.04),transparent 65%);animation:d2 22s ease-in-out infinite alternate}
+.a3{top:40%;left:30%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,180,255,.02),transparent 65%);animation:d1 28s ease-in-out infinite alternate-reverse}
+@keyframes d1{0%{transform:translate(0,0)}100%{transform:translate(50px,35px)}}
+@keyframes d2{0%{transform:translate(0,0)}100%{transform:translate(-40px,45px)}}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:66px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;
+  background:rgba(3,10,15,.92);
+  backdrop-filter:blur(32px) saturate(1.8);
+  border-bottom:1px solid rgba(0,180,255,.07);
+}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo{width:38px;height:38px;border-radius:10px;object-fit:cover;
+  filter:drop-shadow(0 0 14px rgba(0,180,255,.6));transition:filter .3s}
+.nav-brand:hover .nav-logo{filter:drop-shadow(0 0 24px rgba(0,180,255,.9))}
+.brand-name{font-size:19px;font-weight:800;color:white;letter-spacing:-.3px}
+.brand-name em{font-style:normal;background:linear-gradient(130deg,#00b4ff,#00eaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: .4;
-    }
+.nav-tabs{display:flex;align-items:center;background:rgba(0,180,255,.04);border:1px solid rgba(0,180,255,.08);border-radius:12px;padding:4px;gap:2px}
+.nav-tab{
+  color:#2a5570;text-decoration:none;font-size:13px;font-weight:700;
+  padding:7px 18px;border-radius:9px;transition:all .2s;letter-spacing:.3px;
+  display:flex;align-items:center;gap:7px;
+}
+.nav-tab svg{width:14px;height:14px;opacity:.5;transition:opacity .2s}
+.nav-tab:hover{color:var(--bright);background:rgba(0,180,255,.06)}
+.nav-tab:hover svg{opacity:1}
+.nav-tab.on{color:white;background:rgba(0,180,255,.12);box-shadow:inset 0 0 0 1px rgba(0,180,255,.2)}
+.nav-tab.on svg{opacity:1;color:#00b4ff}
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px;
-      height: 64px;
-      background: rgba(10,13,24,0.85);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-    }
+.nav-disc{
+  display:flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#5865F2,#4752c4);
+  color:white;padding:9px 20px;border-radius:10px;
+  font-weight:700;font-size:13px;text-decoration:none;
+  box-shadow:0 4px 22px rgba(88,101,242,.38);
+  transition:transform .15s,box-shadow .2s,filter .2s;
+}
+.nav-disc:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(88,101,242,.55);filter:brightness(1.1)}
 
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 22px; font-weight: 800;
-      color: white; letter-spacing: -0.5px;
-      display: flex; align-items: center; gap: 8px;
-    }
+/* ─── PAGES ─── */
+.page{display:none;padding-top:66px;min-height:100vh;position:relative;z-index:1}
+.page.on{display:block}
+.wrap{max-width:1240px;margin:0 auto;padding:0 52px}
 
-    .nav-logo span { color: var(--blue); }
+/* ─── HERO ─── */
+.hero{
+  max-width:1240px;margin:0 auto;padding:90px 52px 100px;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:72px;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--cyan);padding:5px 16px 5px 11px;
+  border-radius:100px;border:1px solid rgba(0,212,255,.2);
+  background:rgba(0,212,255,.05);margin-bottom:30px;
+}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 10px rgba(0,212,255,.9);animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hero-h1{font-size:clamp(38px,5.5vw,68px);font-weight:800;line-height:1.05;letter-spacing:-2px;color:white;margin-bottom:24px}
+.hero-h1 .gr{background:linear-gradient(125deg,#00b4ff 0%,#00eaff 60%,#80f0ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-p{color:#2a5570;font-size:15.5px;line-height:1.85;max-width:440px;margin-bottom:44px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:58px}
+.hero-stats{display:flex;gap:44px;padding-top:36px;border-top:1px solid rgba(0,180,255,.07)}
+.hs-n{font-size:30px;font-weight:800;color:white;letter-spacing:-1px}
+.hs-l{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#1a3d52;margin-top:4px}
 
-    .nav-links { display: flex; gap: 4px; align-items: center; }
+/* VISUAL PANEL */
+.hero-visual{position:relative}
+.console-card{
+  background:linear-gradient(145deg,#060f1a,#040b13);
+  border:1px solid rgba(0,180,255,.12);
+  border-radius:22px;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.02),0 50px 100px rgba(0,0,0,.8),0 0 60px rgba(0,180,255,.06);
+  animation:float 9s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0) rotate(.15deg)}50%{transform:translateY(-14px) rotate(-.15deg)}}
+.cc-head{background:#030a12;padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(0,180,255,.06)}
+.cc-dot{width:11px;height:11px;border-radius:50%}
+.cc-r{background:#ff5f57}.cc-y{background:#febc2e}.cc-g{background:#28c840}
+.cc-title{margin-left:6px;font-family:'DM Mono',monospace;font-size:11px;color:#0d2033;letter-spacing:.5px}
+.cc-body{padding:26px 24px;font-family:'DM Mono',monospace;font-size:12px;line-height:2.1}
+.cc-line{display:flex;align-items:flex-start;gap:12px}
+.cc-ln{color:#0d2033;font-size:10px;width:18px;text-align:right;flex-shrink:0;padding-top:1px}
+.c-key{color:#00b4ff}.c-val{color:#80f0ff}.c-str{color:#00eaff}.c-num{color:#ffd166}.c-com{color:#0d2033}.c-ok{color:#06d6a0}.c-op{color:#6a8fa8}
+.cc-foot{background:#030a12;border-top:1px solid rgba(0,180,255,.06);padding:10px 20px;display:flex;align-items:center;gap:8px}
+.cc-status{width:8px;height:8px;border-radius:50%;background:#06d6a0;box-shadow:0 0 8px rgba(6,214,160,.8)}
+.cc-ft{font-family:'DM Mono',monospace;font-size:10px;color:#0d3040}
 
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px; font-weight: 500;
-      padding: 6px 14px;
-      border-radius: 8px;
-      transition: color .2s, background .2s;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      color: white;
-      background: rgba(255,255,255,0.06);
-    }
+/* BADGE floating */
+.badge-float{
+  position:absolute;bottom:-18px;right:-18px;
+  background:linear-gradient(135deg,rgba(0,180,255,.15),rgba(0,80,140,.1));
+  border:1px solid rgba(0,180,255,.2);border-radius:14px;padding:14px 20px;
+  backdrop-filter:blur(20px);
+  font-size:12px;font-weight:700;color:#00b4ff;letter-spacing:.5px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 20px rgba(0,180,255,.1);
+}
+.badge-float span{display:block;font-size:10px;color:#1a5070;font-weight:600;margin-top:2px;letter-spacing:.3px}
 
-    .nav-discord {
-      background: #5865F2;
-      color: white !important;
-      border-radius: 8px;
-      padding: 7px 16px !important;
-      font-weight: 600 !important;
-      display: flex; align-items: center; gap: 6px;
-      transition: background .2s, transform .1s !important;
-    }
-    .nav-discord:hover { background: #4752c4 !important; transform: translateY(-1px); }
+/* ─── BUTTONS ─── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,#0077cc,#00b4ff);
+  color:white;padding:13px 28px;border-radius:12px;
+  font-weight:700;font-size:14px;border:none;cursor:pointer;
+  text-decoration:none;letter-spacing:.3px;
+  box-shadow:0 6px 30px rgba(0,180,255,.35);
+  transition:transform .15s,box-shadow .2s,filter .15s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,180,255,.5);filter:brightness(1.08)}
+.btn-primary svg{width:16px;height:16px}
 
-    /* ── PAGES ── */
-    .page { display: none; padding-top: 64px; min-height: 100vh; }
-    .page.active { display: block; }
+.btn-outline{
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(0,180,255,.05);color:var(--bright);
+  padding:13px 28px;border-radius:12px;
+  font-weight:700;font-size:14px;
+  border:1px solid rgba(0,180,255,.14);cursor:pointer;
+  text-decoration:none;transition:background .2s,border-color .2s,transform .15s;
+}
+.btn-outline:hover{background:rgba(0,180,255,.1);border-color:rgba(0,180,255,.25);transform:translateY(-2px)}
+.btn-outline svg{width:16px;height:16px}
 
-    /* ── HERO ── */
-    #home {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      min-height: 100vh;
-      padding: 80px 40px 60px;
-      gap: 60px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
+.btn-disc-inline{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,#5865F2,#4752c4);
+  color:white;padding:13px 28px;border-radius:12px;
+  font-weight:700;font-size:14px;border:none;cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 6px 28px rgba(88,101,242,.4);
+  transition:transform .15s,box-shadow .2s,filter .15s;
+}
+.btn-disc-inline:hover{transform:translateY(-2px);box-shadow:0 12px 38px rgba(88,101,242,.55);filter:brightness(1.08)}
+.btn-disc-inline svg{width:16px;height:16px;fill:white}
 
-    .hero-bg {
-      position: fixed; inset: 0; pointer-events: none; z-index: -1;
-      background:
-        radial-gradient(ellipse 70% 60% at 60% 30%, rgba(59,130,246,0.12) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(99,102,241,0.08) 0%, transparent 60%),
-        var(--bg);
-    }
+/* ─── SECTION SHARED ─── */
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.eyebrow::before{content:'';width:22px;height:1.5px;background:var(--cyan);border-radius:2px}
+.sec-title{font-size:clamp(28px,3.8vw,44px);font-weight:800;color:white;letter-spacing:-1.2px;margin-bottom:10px}
+.sec-sub{color:#6a8fa8;font-size:15px;line-height:1.8;max-width:500px;margin-bottom:52px}
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--blue-light);
-      padding: 5px 12px; border-radius: 100px;
-      background: rgba(59,130,246,0.1);
-      border: 1px solid rgba(59,130,246,0.25);
-      margin-bottom: 24px;
-    }
-    .hero-badge::before { content: '●'; font-size: 8px; }
+/* ─── TWEAKS PAGE ─── */
+.tweaks-hero{
+  padding:70px 52px 30px;max-width:1240px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:32px;
+}
+.tweaks-grid{
+  max-width:1240px;margin:0 auto;padding:0 52px 80px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
 
-    .hero-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(38px, 5vw, 64px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1.5px;
-      color: white;
-      margin-bottom: 20px;
-    }
-    .hero-title em { font-style: normal; color: var(--blue-light); }
+/* PRODUCT CARD */
+.prod-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  transition:border-color .3s,transform .2s,box-shadow .25s;
+  display:flex;flex-direction:column;
+  position:relative;
+}
+.prod-card:hover{border-color:rgba(0,180,255,.22);transform:translateY(-4px);box-shadow:0 24px 54px rgba(0,0,0,.4),0 0 30px rgba(0,180,255,.05)}
+.prod-card.featured{border-color:rgba(0,180,255,.2);box-shadow:0 0 0 1px rgba(0,180,255,.08),0 20px 50px rgba(0,0,0,.4)}
 
-    .hero-sub {
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.7;
-      max-width: 480px;
-      margin-bottom: 36px;
-    }
+.prod-badge{
+  position:absolute;top:16px;right:16px;
+  padding:4px 12px;border-radius:100px;
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+}
+.badge-free{background:rgba(6,214,160,.12);color:#06d6a0;border:1px solid rgba(6,214,160,.2)}
+.badge-pro{background:rgba(0,180,255,.12);color:#00b4ff;border:1px solid rgba(0,180,255,.2)}
 
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.prod-header{
+  padding:28px 28px 0;
+}
+.prod-platform-icon{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;font-size:22px;
+}
+.ps5-icon{background:linear-gradient(135deg,rgba(0,70,140,.3),rgba(0,30,80,.2));border:1px solid rgba(0,180,255,.15)}
+.ps4-icon{background:linear-gradient(135deg,rgba(0,50,120,.3),rgba(0,20,70,.2));border:1px solid rgba(0,140,255,.12)}
+.xbox-icon{background:linear-gradient(135deg,rgba(16,124,16,.25),rgba(0,60,0,.2));border:1px solid rgba(0,180,60,.15)}
 
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--blue); color: white;
-      padding: 12px 24px; border-radius: 10px;
-      font-weight: 600; font-size: 14px; cursor: pointer;
-      border: none; text-decoration: none;
-      transition: background .2s, transform .15s, box-shadow .2s;
-      box-shadow: 0 4px 20px rgba(59,130,246,0.35);
-    }
-    .btn-primary:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.45); }
+.prod-platform{font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.ps5-color{color:#00b4ff}
+.ps4-color{color:#0080ff}
+.xbox-color{color:#07c160}
+.prod-title{font-size:22px;font-weight:800;color:white;letter-spacing:-.5px;margin-bottom:10px}
+.prod-desc{font-size:13.5px;color:#2a5570;line-height:1.7;margin-bottom:20px}
 
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: var(--text);
-      padding: 12px 24px; border-radius: 10px;
-      font-weight: 600; font-size: 14px; cursor: pointer;
-      border: 1px solid var(--border); text-decoration: none;
-      transition: background .2s, border-color .2s, transform .15s;
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
+.prod-divider{height:1px;background:var(--border);margin:0 28px}
 
-    .hero-stat {
-      display: flex; align-items: center; gap: 16px;
-      margin-top: 48px; padding-top: 32px;
-      border-top: 1px solid var(--border);
-    }
-    .stat-item { text-align: center; }
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 26px; font-weight: 800; color: white;
-    }
-    .stat-label { font-size: 12px; color: var(--muted); }
-    .stat-sep { width: 1px; height: 36px; background: var(--border); }
+.prod-info{padding:20px 28px}
+.prod-features{list-style:none;margin-bottom:22px}
+.prod-features li{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:13px;color:#3a6a85;padding:5px 0;
+  border-bottom:1px solid rgba(0,180,255,.04);
+}
+.prod-features li:last-child{border-bottom:none}
+.prod-features li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:7px;box-shadow:0 0 6px rgba(0,180,255,.5)}
 
-    /* CODE WINDOW */
-    .code-window {
-      background: #0d1117;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.1);
-      overflow: hidden;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
-      animation: float 5s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .code-titlebar {
-      background: #161b22;
-      padding: 12px 16px;
-      display: flex; align-items: center; gap: 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot-r { background: #ff5f57; }
-    .dot-y { background: #febc2e; }
-    .dot-g { background: #28c840; }
-    .code-filename {
-      margin-left: 8px; font-size: 12px; color: #8b949e;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .code-filename::before { content: '⬜'; font-size: 10px; color: var(--blue); }
-    .code-body { padding: 20px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 2; }
-    .ln { color: #30363d; user-select: none; margin-right: 16px; font-size: 11px; }
-    .c-comment { color: #8b949e; }
-    .c-kw { color: #ff7b72; }
-    .c-var { color: #79c0ff; }
-    .c-str { color: #a5d6ff; }
-    .c-val { color: #ffa657; }
-    .c-key { color: #e2c08d; }
-    .code-terminal {
-      background: #0d1117;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 14px 20px;
-    }
-    .term-tabs { display: flex; gap: 12px; margin-bottom: 10px; }
-    .term-tab { font-size: 12px; color: var(--muted); cursor: pointer; }
-    .term-tab.active { color: white; border-bottom: 1px solid var(--blue); padding-bottom: 2px; }
-    .term-line { font-family: 'Courier New', monospace; font-size: 12px; color: #8b949e; margin: 3px 0; }
-    .term-line .prompt { color: var(--blue-light); }
-    .term-line .success { color: #56d364; }
-    .term-line .live { color: #79c0ff; }
-    .code-statusbar {
-      background: var(--blue);
-      padding: 4px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .code-statusbar span { font-size: 11px; color: rgba(255,255,255,0.8); }
+.prod-warning{
+  background:rgba(255,180,0,.05);border:1px solid rgba(255,180,0,.12);
+  border-radius:10px;padding:10px 14px;margin-bottom:20px;
+  font-size:12px;color:#997a00;display:flex;align-items:flex-start;gap:8px;
+}
+.prod-warning svg{width:14px;height:14px;flex-shrink:0;margin-top:1px;color:#ffd166}
 
-    /* ── SECTION COMMON ── */
-    .section {
-      padding: 80px 40px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
+.prod-price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.prod-price{font-size:28px;font-weight:800;color:white;letter-spacing:-1px}
+.prod-price span{font-size:14px;font-weight:600;color:#2a5570;letter-spacing:0}
+.price-free{font-size:22px;font-weight:800;color:#06d6a0;letter-spacing:-.5px}
 
-    .section-eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--blue-light);
-      margin-bottom: 12px;
-    }
+.prod-cta{
+  display:flex;align-items:center;gap:8px;width:100%;
+  padding:12px 20px;border-radius:11px;
+  font-size:13px;font-weight:700;cursor:pointer;
+  text-decoration:none;border:none;justify-content:center;
+  transition:transform .12s,box-shadow .18s,filter .12s;letter-spacing:.3px;
+}
+.cta-paid{
+  background:linear-gradient(135deg,#0077cc,#00b4ff);color:white;
+  box-shadow:0 4px 20px rgba(0,180,255,.3);
+}
+.cta-paid:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,180,255,.45);filter:brightness(1.1)}
+.cta-free{
+  background:rgba(6,214,160,.1);color:#06d6a0;
+  border:1px solid rgba(6,214,160,.2);
+}
+.cta-free:hover{background:rgba(6,214,160,.16);transform:translateY(-1px);box-shadow:0 6px 20px rgba(6,214,160,.15)}
+.cta-free svg,.cta-paid svg{width:15px;height:15px;fill:currentColor}
 
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 800; line-height: 1.15;
-      letter-spacing: -1px; color: white;
-      margin-bottom: 16px;
-    }
+/* HOW FREE WORKS */
+.how-section{
+  max-width:1240px;margin:0 auto;padding:0 52px 80px;
+}
+.how-box{
+  background:var(--card);border:1px solid rgba(0,180,255,.1);
+  border-radius:20px;padding:40px;
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;
+}
+.how-title{font-size:20px;font-weight:800;color:white;letter-spacing:-.4px;margin-bottom:6px}
+.how-sub{font-size:13.5px;color:#2a5570;margin-bottom:28px;line-height:1.7}
+.step{display:flex;gap:16px;margin-bottom:20px}
+.step-num{
+  width:32px;height:32px;border-radius:10px;flex-shrink:0;
+  background:rgba(0,180,255,.1);border:1px solid rgba(0,180,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#00b4ff;font-family:'DM Mono',monospace;
+}
+.step-info{font-size:13.5px;color:#3a6a85;line-height:1.65}
+.step-info strong{color:var(--bright);display:block;margin-bottom:2px;font-size:13px}
+.step-info a{color:#00b4ff;text-decoration:none}
+.step-info a:hover{text-decoration:underline}
 
-    .section-sub {
-      color: var(--muted); max-width: 520px;
-      font-size: 15px; line-height: 1.7;
-      margin-bottom: 48px;
-    }
+.how-paid{background:rgba(0,180,255,.04);border:1px solid rgba(0,180,255,.1);border-radius:14px;padding:24px}
+.how-paid-title{font-size:16px;font-weight:800;color:white;margin-bottom:14px;letter-spacing:-.3px}
+.price-list{list-style:none}
+.price-list li{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,180,255,.06);font-size:14px;color:#3a6a85}
+.price-list li:last-child{border-bottom:none}
+.price-list .pl-name{font-weight:700;color:var(--bright)}
+.price-list .pl-price{font-weight:800;color:#00b4ff;font-family:'DM Mono',monospace}
+.price-list .pl-guaranteed{font-size:10px;color:#06d6a0;font-weight:600;letter-spacing:.5px}
+.how-paid-note{margin-top:16px;font-size:12.5px;color:#1a4055;line-height:1.6}
 
-    /* ── SCRIPTS PAGE ── */
-    .scripts-hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e2d5a 100%);
-      border-radius: var(--radius);
-      padding: 48px;
-      margin-bottom: 40px;
-      display: flex; gap: 48px; align-items: center;
-      border: 1px solid rgba(59,130,246,0.2);
-    }
+/* ─── HOME FEATURES ─── */
+.feats{max-width:1240px;margin:0 auto;padding:0 52px 80px}
+.feats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px;
+  transition:border-color .25s,transform .2s,box-shadow .2s;position:relative;overflow:hidden;
+}
+.fc::before{content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,rgba(0,180,255,.04),transparent);transition:opacity .3s}
+.fc:hover{border-color:rgba(0,180,255,.2);transform:translateY(-3px);box-shadow:0 22px 48px rgba(0,0,0,.38)}
+.fc:hover::before{opacity:1}
+.fc-ico{width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(0,100,200,.15),rgba(0,180,255,.08));
+  border:1px solid rgba(0,180,255,.15);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:#00b4ff}
+.fc-ico svg{width:20px;height:20px}
+.fc-name{font-size:15px;font-weight:800;color:white;margin-bottom:7px;letter-spacing:-.2px}
+.fc-txt{font-size:13px;color:#2a5570;line-height:1.7}
 
-    .scripts-hero-left { flex: 1; }
-    .scripts-hero-right {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 12px; flex-shrink: 0;
-    }
+/* ─── FOOTER ─── */
+footer{
+  border-top:1px solid rgba(0,180,255,.06);
+  padding:32px 52px;text-align:center;position:relative;z-index:1;
+}
+.foot-name{font-size:20px;font-weight:800;color:white;margin-bottom:8px;letter-spacing:-.3px}
+.foot-name em{font-style:normal;background:linear-gradient(130deg,#00b4ff,#00eaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-    .script-icon-card {
-      background: rgba(59,130,246,0.12);
-      border: 1px solid rgba(59,130,246,0.2);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      font-size: 12px; font-weight: 600; color: var(--text);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      cursor: pointer;
-      transition: background .2s, transform .15s, border-color .2s;
-    }
-    .script-icon-card:hover {
-      background: rgba(59,130,246,0.2);
-      border-color: rgba(59,130,246,0.4);
-      transform: translateY(-3px);
-    }
-    .script-icon-card .ico {
-      width: 44px; height: 44px;
-      background: rgba(59,130,246,0.2);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-    }
+/* ─── FAQ ─── */
+.faq-wrap{max-width:800px;margin:0 auto;padding:70px 52px 90px}
+.faq-list{margin-top:48px}
+.faq-item{
+  border-bottom:1px solid rgba(0,180,255,.07);
+  overflow:hidden;
+}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 0;cursor:pointer;gap:20px;
+  font-size:15px;font-weight:700;color:#dff0ff;
+  transition:color .2s;user-select:none;
+}
+.faq-q:hover{color:#00b4ff}
+.faq-icon{
+  width:28px;height:28px;border-radius:8px;flex-shrink:0;
+  background:rgba(0,180,255,.07);border:1px solid rgba(0,180,255,.12);
+  display:flex;align-items:center;justify-content:center;color:#00b4ff;
+  transition:transform .25s,background .2s;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(0,180,255,.14)}
+.faq-icon svg{width:14px;height:14px}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease,padding .3s;
+  font-size:14px;color:#6a8fa8;line-height:1.8;
+}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:20px}
 
-    .scripts-stats {
-      display: flex; gap: 32px; margin-top: 32px;
-      padding-top: 24px; border-top: 1px solid var(--border);
-    }
-    .scripts-stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 32px; font-weight: 800; color: white;
-    }
-    .scripts-stat-label { font-size: 12px; color: var(--muted); }
+/* ─── TOS ─── */
+.tos-wrap{max-width:760px;margin:0 auto;padding:70px 52px 90px}
+.tos-section{margin-bottom:38px}
+.tos-section h3{font-size:16px;font-weight:800;color:white;letter-spacing:-.2px;margin-bottom:10px}
+.tos-section p,.tos-section li{font-size:14px;color:#6a8fa8;line-height:1.85}
+.tos-section ul{list-style:none;margin-top:8px}
+.tos-section ul li{padding:4px 0;padding-left:14px;position:relative}
+.tos-section ul li::before{content:'—';position:absolute;left:0;color:#2a5570}
+.tos-divider{height:1px;background:rgba(0,180,255,.06);margin:32px 0}
 
-    /* SCRIPT CARDS */
-    .scripts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
-    }
-
-    .script-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: border-color .2s, transform .2s, box-shadow .2s;
-    }
-    .script-card:hover {
-      border-color: rgba(59,130,246,0.35);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-
-    .script-card-img {
-      height: 160px;
-      background: linear-gradient(135deg, #1a2744 0%, #0f1e4a 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px; position: relative; overflow: hidden;
-    }
-    .script-card-img::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, var(--surface) 100%);
-    }
-    .script-card-badge {
-      position: absolute; top: 12px; right: 12px;
-      background: #f59e0b;
-      color: white; font-size: 10px; font-weight: 700;
-      padding: 3px 9px; border-radius: 100px;
-      letter-spacing: .5px; text-transform: uppercase;
-      z-index: 1;
-    }
-    .script-card-tag {
-      position: absolute; bottom: 12px; left: 12px;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(6px);
-      color: white; font-size: 11px; font-weight: 600;
-      padding: 4px 10px; border-radius: 6px;
-      display: flex; align-items: center; gap: 5px;
-      z-index: 1;
-    }
-
-    .script-card-body { padding: 20px; }
-
-    .script-card-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 18px; font-weight: 700; color: white;
-      margin-bottom: 8px;
-    }
-
-    .script-card-desc {
-      font-size: 13px; color: var(--muted);
-      line-height: 1.6; margin-bottom: 20px;
-    }
-
-    .script-card-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 16px; border-top: 1px solid var(--border);
-    }
-
-    .script-price {
-      font-family: 'Syne', sans-serif;
-      font-size: 20px; font-weight: 700; color: white;
-    }
-    .script-price.free { color: var(--blue-light); }
-
-    .btn-order {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--blue); color: white;
-      padding: 9px 18px; border-radius: 8px;
-      font-size: 13px; font-weight: 600;
-      border: none; cursor: pointer;
-      transition: background .2s, transform .1s;
-      text-decoration: none;
-    }
-    .btn-order:hover { background: #2563eb; transform: translateY(-1px); }
-    .btn-order.claim { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); }
-    .btn-order.claim:hover { background: rgba(59,130,246,0.25); }
-
-    /* ── SERVERS PAGE ── */
-    .servers-section { padding: 60px 40px; max-width: 1280px; margin: 0 auto; }
-
-    .server-hero-card {
-      background: linear-gradient(135deg, #0f172a, #1a2f5e);
-      border: 1px solid rgba(59,130,246,0.25);
-      border-radius: var(--radius);
-      padding: 56px;
-      text-align: center;
-      margin-bottom: 48px;
-      position: relative; overflow: hidden;
-    }
-    .server-hero-card::before {
-      content: '';
-      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .server-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-    }
-
-    .server-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: border-color .2s, transform .2s;
-    }
-    .server-card:hover {
-      border-color: rgba(59,130,246,0.3);
-      transform: translateY(-4px);
-    }
-
-    .server-card-icon {
-      width: 48px; height: 48px;
-      background: rgba(59,130,246,0.15);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; margin-bottom: 16px;
-    }
-
-    .server-card-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 17px; font-weight: 700; color: white;
-      margin-bottom: 8px;
-    }
-
-    .server-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-
-    /* ── PRODUCTS PAGE ── */
-    .products-section { padding: 60px 40px; max-width: 1280px; margin: 0 auto; }
-
-    .bot-hero {
-      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-      border-radius: var(--radius);
-      padding: 56px;
-      text-align: center;
-      margin-bottom: 48px;
-      position: relative; overflow: hidden;
-    }
-    .bot-hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-    .bot-hero-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(32px, 5vw, 56px);
-      font-weight: 800; color: white;
-      letter-spacing: -1.5px; margin-bottom: 16px;
-      position: relative;
-    }
-    .bot-hero-sub {
-      color: rgba(255,255,255,0.8);
-      font-size: 16px; line-height: 1.7;
-      max-width: 560px; margin: 0 auto 28px;
-      position: relative;
-    }
-    .bot-badges {
-      display: flex; gap: 10px; flex-wrap: wrap;
-      justify-content: center; margin-top: 20px;
-      position: relative;
-    }
-    .bot-badge {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: white; font-size: 12px; font-weight: 600;
-      padding: 7px 14px; border-radius: 100px;
-      display: flex; align-items: center; gap: 6px;
-      backdrop-filter: blur(6px);
-    }
-
-    /* FEATURE ACCORDION */
-    .features-list { display: flex; flex-direction: column; gap: 8px; }
-
-    .feature-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: border-color .2s;
-    }
-    .feature-item:hover { border-color: rgba(59,130,246,0.25); }
-
-    .feature-header {
-      display: flex; align-items: center;
-      padding: 20px 24px;
-      cursor: pointer; gap: 16px;
-    }
-
-    .feature-icon {
-      width: 42px; height: 42px; flex-shrink: 0;
-      background: rgba(59,130,246,0.12);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
-
-    .feature-text { flex: 1; }
-    .feature-name {
-      font-weight: 700; color: white; font-size: 15px;
-      margin-bottom: 2px;
-    }
-    .feature-short { font-size: 12px; color: var(--muted); }
-
-    .feature-chevron {
-      width: 30px; height: 30px;
-      background: var(--surface2);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted); font-size: 12px;
-      transition: transform .25s, background .2s;
-    }
-    .feature-item.open .feature-chevron { transform: rotate(180deg); background: rgba(59,130,246,0.15); color: var(--blue-light); }
-
-    .feature-body {
-      max-height: 0; overflow: hidden;
-      transition: max-height .35s ease, padding .25s;
-    }
-    .feature-item.open .feature-body { max-height: 200px; }
-    .feature-body-inner {
-      padding: 0 24px 20px 80px;
-      font-size: 13px; color: var(--muted); line-height: 1.7;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    footer span { color: var(--blue-light); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 860px) {
-      #home { grid-template-columns: 1fr; padding: 32px 20px 60px; }
-      .code-window { display: none; }
-      .scripts-hero { flex-direction: column; padding: 28px; }
-      .scripts-hero-right { grid-template-columns: repeat(4,1fr); }
-      .server-grid { grid-template-columns: 1fr; }
-      nav { padding: 0 16px; }
-      .nav-links a span { display: none; }
-      .section, .scripts-section, .servers-section, .products-section { padding: 40px 20px; }
-      .bot-hero { padding: 32px 20px; }
-    }
-  </style>
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  nav{padding:0 20px}
+  .nav-tabs{display:none}
+  .hero{grid-template-columns:1fr;padding:60px 24px 80px;gap:40px}
+  .hero-visual{display:none}
+  .wrap,.tweaks-hero,.tweaks-grid,.feats,.how-section,.faq-wrap,.tos-wrap{padding-left:24px;padding-right:24px}
+  .tweaks-grid{grid-template-columns:1fr}
+  .feats-grid{grid-template-columns:1fr;gap:10px}
+  .how-box{grid-template-columns:1fr;gap:28px}
+  footer{padding:28px 24px}
+}
+</style>
 </head>
 <body>
 
-<div class="hero-bg"></div>
+<div class="amb">
+  <span class="a1"></span>
+  <span class="a2"></span>
+  <span class="a3"></span>
+</div>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect width="26" height="26" rx="7" fill="#3b82f6"/><path d="M7 19L13 7L19 19M10 15H16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-    Ray<span>trix</span>
-  </div>
-  <div class="nav-links">
-    <a href="#" class="active" onclick="showPage('home',this)">Home</a>
-    <a href="#" onclick="showPage('products',this)">Producten</a>
-    <a href="#" onclick="showPage('scripts',this)">Scripts</a>
-    <a href="#" onclick="showPage('servers',this)">Servers</a>
-    <a href="https://discord.gg/" target="_blank" class="nav-discord">
-      <svg width="16" height="16" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-      Discord
+  <a href="#" class="nav-brand" onclick="goPage(event,'home')">
+    <img src="vizztweaks.png" alt="VizzTweaks" class="nav-logo"/>
+    <div class="brand-name">Vizz<em>Tweaks</em></div>
+  </a>
+  <div class="nav-tabs">
+    <a href="#" class="nav-tab on" id="nt-home" onclick="goPage(event,'home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a href="#" class="nav-tab" id="nt-tweaks" onclick="goPage(event,'tweaks')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Tweaks
+    </a>
+    <a href="#" class="nav-tab" id="nt-faq" onclick="goPage(event,'faq')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      FAQ
+    </a>
+    <a href="#" class="nav-tab" id="nt-tos" onclick="goPage(event,'tos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      ToS
     </a>
   </div>
+  <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="nav-disc">
+    <svg width="15" height="15" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+    Discord
+  </a>
 </nav>
 
-<!-- ══ HOME PAGE ══ -->
-<div id="page-home" class="page active">
-  <div id="home">
-    <div class="hero-left">
-      <div class="hero-badge">Premium Digital Solutions</div>
-      <h1 class="hero-title">
-        Jouw digitale<br>
-        <em>infrastructuur</em><br>
-        begint hier
-      </h1>
-      <p class="hero-sub">Van FiveM servers tot Discord bots en op maat gebouwde websites — wij leveren schaalbare, stabiele oplossingen die werken. Geen templates, geen compromissen.</p>
-      <div class="hero-actions">
-        <a href="https://discord.gg/" target="_blank" class="btn-primary">
-          <svg width="16" height="16" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-          Start via Discord
+<!-- ════════════ HOME ════════════ -->
+<div class="page on" id="pg-home">
+  <div class="hero">
+    <div>
+      <div class="hero-pill"><div class="hero-dot"></div>Console Tweaks — PS5 · PS4 · Xbox</div>
+      <h1 class="hero-h1">Next-level<br><span class="gr">console tweaks</span><br>that deliver</h1>
+      <p class="hero-p">VizzTweaks offers free and premium console tweaks for PS5, PS4 and Xbox. Our paid tweaks come with a full guarantee — we make sure it works.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary" onclick="goPage(event,'tweaks')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          View Tweaks
         </a>
-        <a href="#" class="btn-ghost" onclick="showPage('scripts', document.querySelector('.nav-links a:nth-child(3)'))">Bekijk diensten →</a>
+        <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="btn-outline">
+          <svg viewBox="0 0 71 55" fill="currentColor" style="width:16px;height:16px"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+          Join Discord
+        </a>
       </div>
-      <div class="hero-stat">
-        <div class="stat-item">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Tevreden klanten</div>
-        </div>
-        <div class="stat-sep"></div>
-        <div class="stat-item">
-          <div class="stat-num">200+</div>
-          <div class="stat-label">Servers gehost</div>
-        </div>
-        <div class="stat-sep"></div>
-        <div class="stat-item">
-          <div class="stat-num">99%</div>
-          <div class="stat-label">Uptime</div>
-        </div>
-        <div class="stat-sep"></div>
-        <div class="stat-item">
-          <div class="stat-num">24/7</div>
-          <div class="stat-label">Support</div>
-        </div>
+      <div class="hero-stats">
+        <div><div class="hs-n">3</div><div class="hs-l">Platforms</div></div>
+        <div><div class="hs-n">100%</div><div class="hs-l">Guaranteed</div></div>
+        <div><div class="hs-n">24/7</div><div class="hs-l">Support</div></div>
+        <div><div class="hs-n">Free</div><div class="hs-l">Option</div></div>
       </div>
     </div>
-
-    <!-- CODE WINDOW -->
-    <div class="code-window">
-      <div class="code-titlebar">
-        <div class="dot dot-r"></div>
-        <div class="dot dot-y"></div>
-        <div class="dot dot-g"></div>
-        <div class="code-filename">raytrixscripts.lua</div>
-      </div>
-      <div class="code-body">
-        <div><span class="ln">1</span><span class="c-comment">-- Raytrix Scripts | raytrix.nl</span></div>
-        <div><span class="ln">2</span><span class="c-kw">local</span> <span class="c-var">Raytrix</span> = {}</div>
-        <div><span class="ln">3</span></div>
-        <div><span class="ln">4</span><span class="c-var">Raytrix</span>.<span class="c-key">server</span> = {</div>
-        <div><span class="ln">5</span>&nbsp;&nbsp;<span class="c-key">name</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span class="c-str">"Raytrix Roleplay"</span>,</div>
-        <div><span class="ln">6</span>&nbsp;&nbsp;<span class="c-key">framework</span> = <span class="c-str">"ESX"</span>,</div>
-        <div><span class="ln">7</span>&nbsp;&nbsp;<span class="c-key">slots</span>&nbsp;&nbsp;&nbsp;&nbsp;= <span class="c-val">128</span>,</div>
-        <div><span class="ln">8</span>}</div>
-        <div><span class="ln">9</span><span class="c-var">Raytrix</span>.<span class="c-key">scripts</span> = {</div>
-        <div><span class="ln">10</span>&nbsp;&nbsp;<span class="c-key">anticheat</span> = <span class="c-val">true</span>,</div>
-        <div><span class="ln">11</span>&nbsp;&nbsp;<span class="c-key">discord</span>&nbsp;&nbsp;= <span class="c-val">true</span>,</div>
-        <div><span class="ln">12</span>}</div>
-        <div><span class="ln">13</span><span class="c-kw">return</span> <span class="c-var">Raytrix</span></div>
-      </div>
-      <div class="code-terminal">
-        <div class="term-tabs">
-          <div class="term-tab active">Terminal</div>
-          <div class="term-tab">Output</div>
+    <div class="hero-visual">
+      <div class="console-card">
+        <div class="cc-head">
+          <div class="cc-dot cc-r"></div><div class="cc-dot cc-y"></div><div class="cc-dot cc-g"></div>
+          <div class="cc-title">vizztweaks / ps5_boost.cfg</div>
         </div>
-        <div class="term-line"><span class="prompt">~/raytrix $</span> start production</div>
-        <div class="term-line"><span class="success">✓</span> 60 scripts geladen — Discord online</div>
-        <div class="term-line"><span class="live">●</span> Live op raytrix.nl</div>
+        <div class="cc-body">
+          <div class="cc-line"><span class="cc-ln">01</span><span class="c-com">// VizzTweaks — PS5 Premium Pack</span></div>
+          <div class="cc-line"><span class="cc-ln">02</span><span class="c-key">performance</span><span class="c-op"> = {</span></div>
+          <div class="cc-line"><span class="cc-ln">03</span>&nbsp;&nbsp;<span class="c-val">fps_boost</span><span class="c-op">:</span> <span class="c-str">"120hz"</span><span class="c-op">,</span></div>
+          <div class="cc-line"><span class="cc-ln">04</span>&nbsp;&nbsp;<span class="c-val">latency</span><span class="c-op">:</span> <span class="c-str">"ultra_low"</span><span class="c-op">,</span></div>
+          <div class="cc-line"><span class="cc-ln">05</span>&nbsp;&nbsp;<span class="c-val">network</span><span class="c-op">:</span> <span class="c-str">"optimised"</span></div>
+          <div class="cc-line"><span class="cc-ln">06</span><span class="c-op">}</span></div>
+          <div class="cc-line"><span class="cc-ln">07</span></div>
+          <div class="cc-line"><span class="cc-ln">08</span><span class="c-key">status</span><span class="c-op">:</span> <span class="c-ok">✓ GUARANTEED</span></div>
+          <div class="cc-line"><span class="cc-ln">09</span><span class="c-key">price</span><span class="c-op">:</span> <span class="c-num">€5.00</span></div>
+          <div class="cc-line"><span class="cc-ln">10</span><span class="c-key">delivery</span><span class="c-op">:</span> <span class="c-str">"via Discord"</span></div>
+        </div>
+        <div class="cc-foot">
+          <div class="cc-status"></div>
+          <div class="cc-ft">Tweak loaded — all checks passed</div>
+        </div>
       </div>
-      <div class="code-statusbar">
-        <span>⎇ main &nbsp; Lua &nbsp; UTF-8</span>
-        <span>● Raytrix</span>
+      <div class="badge-float">
+        🎮 PS5 · PS4 · Xbox
+        <span>Tweaks for every console</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="feats">
+    <div class="feats-grid">
+      <div class="fc">
+        <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="fc-name">Performance Tweaks</div>
+        <div class="fc-txt">Boost FPS, reduce input lag and optimize your console for competitive play. Feel the difference immediately.</div>
+      </div>
+      <div class="fc">
+        <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="fc-name">100% Guaranteed</div>
+        <div class="fc-txt">All paid tweaks come with a full working guarantee. If it doesn't work, we fix it. No questions asked.</div>
+      </div>
+      <div class="fc">
+        <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="fc-name">Fast Delivery</div>
+        <div class="fc-txt">Get your tweaks delivered fast through our Discord. Open a ticket and we'll handle the rest within hours.</div>
+      </div>
+      <div class="fc">
+        <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="fc-name">Multi-Platform</div>
+        <div class="fc-txt">We support PS5, PS4 and Xbox. Whether you're on PlayStation or Xbox — we've got a tweak pack ready for you.</div>
+      </div>
+      <div class="fc">
+        <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="fc-name">Community</div>
+        <div class="fc-txt">Join our Discord community. Free tweaks available for active members. Engage and unlock exclusive access.</div>
+      </div>
+      <div class="fc">
+        <div class="fc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="fc-name">24/7 Support</div>
+        <div class="fc-txt">Got questions or issues? Our team is active around the clock in Discord. We respond fast and solve problems.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ PRODUCTS PAGE ══ -->
-<div id="page-products" class="page">
-  <div class="products-section">
-    <div class="bot-hero">
-      <div class="bot-hero-title">Discord Bot Pro</div>
-      <p class="bot-hero-sub">Een geavanceerde, volledig aanpasbare Discord bot met professionele moderatie-tools, ticket management en community features. Perfect voor servers van elke grootte.</p>
-      <div class="bot-badges">
-        <div class="bot-badge">🔒 Beveiligd &amp; Reliable</div>
-        <div class="bot-badge">⚙️ Volledige Aanpassing</div>
-        <div class="bot-badge">🎧 24/7 Support</div>
-        <div class="bot-badge">🗄️ Database Klaar</div>
-      </div>
-    </div>
+<!-- ════════════ TWEAKS ════════════ -->
+<div class="page" id="pg-tweaks">
 
-    <div class="section-eyebrow">Features</div>
-    <h2 class="section-title">Alles wat je nodig hebt</h2>
-    <p class="section-sub">De Discord Bot Pro is uitgerust met krachtige tools voor elke community.</p>
-
-    <div class="features-list">
-      <div class="feature-item" onclick="toggleFeature(this)">
-        <div class="feature-header">
-          <div class="feature-icon">💬</div>
-          <div class="feature-text">
-            <div class="feature-name">Welcome Message</div>
-            <div class="feature-short">Professioneel welkomstbericht met join counter</div>
-          </div>
-          <div class="feature-chevron">▼</div>
-        </div>
-        <div class="feature-body">
-          <div class="feature-body-inner">Stuur een op maat gemaakt welkomstbericht naar elke nieuwe lid. Inclusief automatische join counter, rol toewijzing en embed customisatie via config.</div>
-        </div>
-      </div>
-
-      <div class="feature-item" onclick="toggleFeature(this)">
-        <div class="feature-header">
-          <div class="feature-icon">🎫</div>
-          <div class="feature-text">
-            <div class="feature-name">Ticket System</div>
-            <div class="feature-short">Geavanceerd ticket management met slash commands</div>
-          </div>
-          <div class="feature-chevron">▼</div>
-        </div>
-        <div class="feature-body">
-          <div class="feature-body-inner">Volledig ticketsysteem met categorieën, prioriteiten en staffnotificaties. Inclusief transcript export en automatische sluiting na inactiviteit.</div>
-        </div>
-      </div>
-
-      <div class="feature-item" onclick="toggleFeature(this)">
-        <div class="feature-header">
-          <div class="feature-icon">💡</div>
-          <div class="feature-text">
-            <div class="feature-name">Suggesties Systeem</div>
-            <div class="feature-short">Automatische suggestie verwerking met voting</div>
-          </div>
-          <div class="feature-chevron">▼</div>
-        </div>
-        <div class="feature-body">
-          <div class="feature-body-inner">Leden kunnen suggesties indienen die automatisch gepost worden in een suggestie kanaal. Staff kan goedkeuren, afwijzen of reageren via buttons.</div>
-        </div>
-      </div>
-
-      <div class="feature-item" onclick="toggleFeature(this)">
-        <div class="feature-header">
-          <div class="feature-icon">⚡</div>
-          <div class="feature-text">
-            <div class="feature-name">Slash Commands</div>
-            <div class="feature-short">Moderne slash command integratie</div>
-          </div>
-          <div class="feature-chevron">▼</div>
-        </div>
-        <div class="feature-body">
-          <div class="feature-body-inner">Alle commands werken via Discord's native slash commands. Inclusief autocomplete, permission checks en uitgebreide logging van alle acties.</div>
-        </div>
-      </div>
-
-      <div class="feature-item" onclick="toggleFeature(this)">
-        <div class="feature-header">
-          <div class="feature-icon">✅</div>
-          <div class="feature-text">
-            <div class="feature-name">Verify Systeem</div>
-            <div class="feature-short">Rol toekenning via verify button</div>
-          </div>
-          <div class="feature-chevron">▼</div>
-        </div>
-        <div class="feature-body">
-          <div class="feature-body-inner">Nieuwe leden verifiëren zichzelf met één klik op een button. Automatisch de juiste rol toewijzen en toegang geven tot kanalen na verificatie.</div>
-        </div>
-      </div>
-
-      <div class="feature-item" onclick="toggleFeature(this)">
-        <div class="feature-header">
-          <div class="feature-icon">🛡️</div>
-          <div class="feature-text">
-            <div class="feature-name">Moderatie Tools</div>
-            <div class="feature-short">Krachtige mod-tools voor server beheer</div>
-          </div>
-          <div class="feature-chevron">▼</div>
-        </div>
-        <div class="feature-body">
-          <div class="feature-body-inner">Ban, kick, mute, warn en timeout commands. Inclusief modlog, case tracking en geautomatiseerde acties bij herhaaldelijk gedrag.</div>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:40px; text-align:center;">
-      <a href="https://discord.gg/" target="_blank" class="btn-primary" style="font-size:15px; padding:14px 32px;">
-        <svg width="16" height="16" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-        Bestellen via Discord
-      </a>
+  <!-- HEADER -->
+  <div class="tweaks-hero">
+    <div>
+      <div class="eyebrow">Console Tweaks</div>
+      <h2 class="sec-title">Pick your platform</h2>
+      <p class="sec-sub">Free tweaks are available through our Discord community. Paid tweaks come with a full working guarantee.</p>
     </div>
   </div>
-</div>
 
-<!-- ══ SCRIPTS PAGE ══ -->
-<div id="page-scripts" class="page">
-  <div class="section" style="padding-bottom:0">
-    <div class="scripts-hero">
-      <div class="scripts-hero-left">
-        <div class="section-eyebrow">FiveM Scripts Suite</div>
-        <h1 class="section-title" style="margin-bottom:12px">Custom FiveM<br>Scripts</h1>
-        <p style="color:var(--muted); font-size:14px; line-height:1.7; max-width:420px; margin-bottom:24px">Professionele FiveM scripts voor jouw server. Admin management, store systemen, playergoal tracking en event automation. Geoptimaliseerd voor performance en stabiliteit.</p>
-        <div style="display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin-bottom:28px;">
-          <span>⚡ Performance optimized</span>
-          <span>🛡️ Veilig &amp; stabiel</span>
-          <span>⚙️ Volledig aanpasbaar</span>
+  <!-- PRODUCT CARDS -->
+  <div class="tweaks-grid">
+
+    <!-- PS5 FREE -->
+    <div class="prod-card">
+      <span class="prod-badge badge-free">Free</span>
+      <div class="prod-header">
+        <div class="prod-platform-icon ps5-icon">🎮</div>
+        <div class="prod-platform ps5-color">PlayStation 5</div>
+        <div class="prod-title">PS5 Free Tweaks</div>
+        <div class="prod-desc">Get a small taste of our PS5 tweak collection for free. Includes 5% of our full paid pack — great to try before you buy.</div>
+      </div>
+      <div class="prod-divider"></div>
+      <div class="prod-info">
+        <ul class="prod-features">
+          <li>Basic performance optimization</li>
+          <li>Minor network latency improvement</li>
+          <li>Display calibration tip</li>
+          <li>Access via Discord ticket only</li>
+        </ul>
+        <div class="prod-warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Free tweaks are not guaranteed to work on all setups. Results may vary.
         </div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="https://discord.gg/" target="_blank" class="btn-primary">
-            <svg width="14" height="14" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-            Start via Discord
+        <div class="prod-price-row">
+          <div class="price-free">Free</div>
+        </div>
+        <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="prod-cta cta-free">
+          <svg viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+          Get Free via Discord
+        </a>
+      </div>
+    </div>
+
+    <!-- PS5 PAID -->
+    <div class="prod-card featured">
+      <span class="prod-badge badge-pro">Pro</span>
+      <div class="prod-header">
+        <div class="prod-platform-icon ps5-icon">🎮</div>
+        <div class="prod-platform ps5-color">PlayStation 5</div>
+        <div class="prod-title">PS5 Premium Tweaks</div>
+        <div class="prod-desc">Our full PS5 tweak pack. Maximum FPS, ultra-low latency, network boost and more. Fully guaranteed to work on your console.</div>
+      </div>
+      <div class="prod-divider"></div>
+      <div class="prod-info">
+        <ul class="prod-features">
+          <li>Full FPS & performance optimization</li>
+          <li>Network & NAT type optimization</li>
+          <li>Ultra-low input lag settings</li>
+          <li>Resolution & display tweaks</li>
+          <li>SSD load time improvements</li>
+          <li>✓ 100% working guarantee</li>
+        </ul>
+        <div class="prod-price-row">
+          <div class="prod-price">€5<span>,00</span></div>
+          <div style="font-size:11px;color:#06d6a0;font-weight:700;letter-spacing:.5px">✓ GUARANTEED</div>
+        </div>
+        <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="prod-cta cta-paid">
+          <svg viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+          Order via Discord
+        </a>
+      </div>
+    </div>
+
+    <!-- PS4 PAID -->
+    <div class="prod-card">
+      <span class="prod-badge badge-pro">Pro</span>
+      <div class="prod-header">
+        <div class="prod-platform-icon ps4-icon">🎮</div>
+        <div class="prod-platform ps4-color">PlayStation 4</div>
+        <div class="prod-title">PS4 Premium Tweaks</div>
+        <div class="prod-desc">Squeeze every bit of performance out of your PS4. Our tweak pack improves gameplay, network and system stability — guaranteed.</div>
+      </div>
+      <div class="prod-divider"></div>
+      <div class="prod-info">
+        <ul class="prod-features">
+          <li>Performance & frame rate tweaks</li>
+          <li>Network & connection optimization</li>
+          <li>Reduced system load settings</li>
+          <li>Improved download & upload speeds</li>
+          <li>Fan & thermal management tips</li>
+          <li>✓ 100% working guarantee</li>
+        </ul>
+        <div class="prod-price-row">
+          <div class="prod-price">€3<span>,50</span></div>
+          <div style="font-size:11px;color:#06d6a0;font-weight:700;letter-spacing:.5px">✓ GUARANTEED</div>
+        </div>
+        <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="prod-cta cta-paid">
+          <svg viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+          Order via Discord
+        </a>
+      </div>
+    </div>
+
+    <!-- XBOX FREE -->
+    <div class="prod-card">
+      <span class="prod-badge badge-free">Free</span>
+      <div class="prod-header">
+        <div class="prod-platform-icon xbox-icon">🎮</div>
+        <div class="prod-platform xbox-color">Xbox</div>
+        <div class="prod-title">Xbox Free Tweaks</div>
+        <div class="prod-desc">A free sample from our Xbox tweak pack. Only 5% of what the full pack offers — no performance guarantee included.</div>
+      </div>
+      <div class="prod-divider"></div>
+      <div class="prod-info">
+        <ul class="prod-features">
+          <li>Basic network settings guide</li>
+          <li>Display calibration tip</li>
+          <li>Controller response tip</li>
+          <li>Access via Discord ticket only</li>
+        </ul>
+        <div class="prod-warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Free tweaks are not guaranteed to work on all setups. Results may vary.
+        </div>
+        <div class="prod-price-row">
+          <div class="price-free">Free</div>
+        </div>
+        <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="prod-cta cta-free">
+          <svg viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+          Get Free via Discord
+        </a>
+      </div>
+    </div>
+
+    <!-- XBOX PAID -->
+    <div class="prod-card featured">
+      <span class="prod-badge badge-pro">Pro</span>
+      <div class="prod-header">
+        <div class="prod-platform-icon xbox-icon">🎮</div>
+        <div class="prod-platform xbox-color">Xbox</div>
+        <div class="prod-title">Xbox Premium Tweaks</div>
+        <div class="prod-desc">Full Xbox optimization pack. Network, performance, input lag and more — all tweaked to the max with a full working guarantee.</div>
+      </div>
+      <div class="prod-divider"></div>
+      <div class="prod-info">
+        <ul class="prod-features">
+          <li>Full FPS & performance boost</li>
+          <li>NAT type & network optimization</li>
+          <li>Controller response improvement</li>
+          <li>Display & refresh rate tweaks</li>
+          <li>Storage & system optimization</li>
+          <li>✓ 100% working guarantee</li>
+        </ul>
+        <div class="prod-price-row">
+          <div class="prod-price">€5<span>,00</span></div>
+          <div style="font-size:11px;color:#06d6a0;font-weight:700;letter-spacing:.5px">✓ GUARANTEED</div>
+        </div>
+        <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="prod-cta cta-paid">
+          <svg viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+          Order via Discord
+        </a>
+      </div>
+    </div>
+
+    <!-- PS4 FREE -->
+    <div class="prod-card">
+      <span class="prod-badge badge-free">Free</span>
+      <div class="prod-header">
+        <div class="prod-platform-icon ps4-icon">🎮</div>
+        <div class="prod-platform ps4-color">PlayStation 4</div>
+        <div class="prod-title">PS4 Free Tweaks</div>
+        <div class="prod-desc">A free intro to our PS4 tweaks. Only 5% of our full paid pack. No guarantee — but a good way to see what we offer.</div>
+      </div>
+      <div class="prod-divider"></div>
+      <div class="prod-info">
+        <ul class="prod-features">
+          <li>Basic connection improvement</li>
+          <li>Simple display setting tip</li>
+          <li>General performance guide</li>
+          <li>Access via Discord ticket only</li>
+        </ul>
+        <div class="prod-warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Free tweaks are not guaranteed to work on all setups. Results may vary.
+        </div>
+        <div class="prod-price-row">
+          <div class="price-free">Free</div>
+        </div>
+        <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="prod-cta cta-free">
+          <svg viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+          Get Free via Discord
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section">
+    <div class="how-box">
+      <div>
+        <div class="eyebrow">How it works</div>
+        <div class="how-title">Getting your free tweaks</div>
+        <div class="how-sub">Follow these steps to unlock your free console tweaks via our Discord server.</div>
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-info">
+            <strong>Follow Vizz on TikTok</strong>
+            Go to <a href="https://www.tiktok.com/@love4vizz?_r=1&_t=ZG-947KijY3cXZ" target="_blank">@love4vizz</a> on TikTok and follow the account.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-info">
+            <strong>Like, comment & repost the latest video</strong>
+            Interact with the newest TikTok post — like it, leave a comment and repost it.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-info">
+            <strong>Open a ticket in Discord</strong>
+            Join our Discord and create a ticket. Send proof of all three steps above.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-info">
+            <strong>Receive your free tweaks</strong>
+            Once verified, we'll send your free tweaks directly in the ticket.
+          </div>
+        </div>
+        <a href="https://www.tiktok.com/@love4vizz?_r=1&_t=ZG-947KijY3cXZ" target="_blank" class="btn-outline" style="margin-top:8px;font-size:13px;padding:10px 22px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Follow @love4vizz on TikTok
+        </a>
+      </div>
+      <div>
+        <div class="how-paid">
+          <div class="how-paid-title">💳 Paid Tweaks — Pricing</div>
+          <ul class="price-list">
+            <li>
+              <div><div class="pl-name">PS5 Premium Tweaks</div><div class="pl-guaranteed">✓ Guaranteed</div></div>
+              <div class="pl-price">€5,00</div>
+            </li>
+            <li>
+              <div><div class="pl-name">Xbox Premium Tweaks</div><div class="pl-guaranteed">✓ Guaranteed</div></div>
+              <div class="pl-price">€5,00</div>
+            </li>
+            <li>
+              <div><div class="pl-name">PS4 Premium Tweaks</div><div class="pl-guaranteed">✓ Guaranteed</div></div>
+              <div class="pl-price">€3,50</div>
+            </li>
+          </ul>
+          <div class="how-paid-note">Open a ticket in our Discord, tell us which platform and tweak pack you want. We'll sort everything directly in the ticket.</div>
+          <a href="https://discord.gg/GBHusvCTRc" target="_blank" class="btn-disc-inline" style="margin-top:20px;width:100%;justify-content:center;font-size:13px;padding:11px 20px">
+            <svg viewBox="0 0 71 55" fill="white" style="width:15px;height:15px"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1Z"/></svg>
+            Order via Discord
           </a>
-          <button class="btn-ghost" onclick="document.getElementById('scripts-cards').scrollIntoView({behavior:'smooth'})"> &lt;/&gt; Bekijk Scripts</button>
-        </div>
-        <div class="scripts-stats">
-          <div><div class="scripts-stat-num">200+</div><div class="scripts-stat-label">SERVERS</div></div>
-          <div><div class="scripts-stat-num">99%</div><div class="scripts-stat-label">UPTIME</div></div>
-          <div><div class="scripts-stat-num">24/7</div><div class="scripts-stat-label">SUPPORT</div></div>
-        </div>
-      </div>
-      <div class="scripts-hero-right">
-        <div class="script-icon-card">
-          <div class="ico">👤</div>
-          Admin Panel
-        </div>
-        <div class="script-icon-card">
-          <div class="ico">🛒</div>
-          Store System
-        </div>
-        <div class="script-icon-card">
-          <div class="ico">📈</div>
-          Playergoal
-        </div>
-        <div class="script-icon-card">
-          <div class="ico">🎉</div>
-          Event Script
         </div>
       </div>
     </div>
   </div>
 
-  <div class="section" id="scripts-cards">
-    <div class="section-eyebrow">Beschikbare Scripts</div>
-    <h2 class="section-title">Kies jouw script</h2>
-    <p class="section-sub">Alle scripts zijn op maat gebouwd, getest en klaar voor gebruik op jouw FiveM server.</p>
+</div>
 
-    <div class="scripts-grid">
-      <!-- Admin Panel -->
-      <div class="script-card">
-        <div class="script-card-img">
-          <span>👤</span>
-          <div class="script-card-tag">👤 Admin Panel</div>
+<!-- ════════════ FAQ ════════════ -->
+<div class="page" id="pg-faq">
+  <div class="faq-wrap">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="sec-title">Frequently Asked Questions</h2>
+    <p class="sec-sub">Everything you need to know about our console tweaks.</p>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="faqToggle(this)">
+          What do these tweaks actually do?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
-        <div class="script-card-body">
-          <div class="script-card-title">Admin Panel</div>
-          <div class="script-card-desc">Complete server controle met speler management, voertuig spawn en permissions systeem.</div>
-          <div class="script-card-footer">
-            <div class="script-price">€40,–</div>
-            <a href="https://discord.gg/" target="_blank" class="btn-order">
-              <svg width="13" height="13" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-              Bestel
-            </a>
-          </div>
-        </div>
+        <div class="faq-a">These tweaks are built to reduce input delay, lower ping, and improve FPS stability. By optimizing system and network settings, they make your inputs feel more responsive, your connection more stable, and your gameplay noticeably smoother. Everything is tweaked to enhance performance without compromising system safety.</div>
       </div>
 
-      <!-- Store Systeem -->
-      <div class="script-card">
-        <div class="script-card-img">
-          <span>🛒</span>
-          <div class="script-card-tag">🛒 Store System</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="faqToggle(this)">
+          Do I need any tools or downloads for console tweaks?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
-        <div class="script-card-body">
-          <div class="script-card-title">Store Systeem</div>
-          <div class="script-card-desc">Multi-shop oplossing met custom items, categorieën en volledige economy integratie.</div>
-          <div class="script-card-footer">
-            <div class="script-price">€30,–</div>
-            <a href="https://discord.gg/" target="_blank" class="btn-order">
-              <svg width="13" height="13" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-              Bestel
-            </a>
-          </div>
-        </div>
+        <div class="faq-a">Nope — everything is done using your console's built-in settings and a few optional router tweaks (like DNS or port forwarding for better ping). No downloads required.</div>
       </div>
 
-      <!-- Refund Script -->
-      <div class="script-card">
-        <div class="script-card-img">
-          <span>↩️</span>
-          <div class="script-card-tag">↩️ Refund Script</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="faqToggle(this)">
+          Is my device supported?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
-        <div class="script-card-body">
-          <div class="script-card-title">Refund Script</div>
-          <div class="script-card-desc">Geautomatiseerd refund systeem voor aankopen met configureerbare regels en admin controle.</div>
-          <div class="script-card-footer">
-            <div class="script-price">€10,–</div>
-            <a href="https://discord.gg/" target="_blank" class="btn-order">
-              <svg width="13" height="13" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-              Bestel
-            </a>
-          </div>
-        </div>
+        <div class="faq-a">Our tweaks are compatible with every Xbox, PS5 and PS4, ensuring broad support across all major consoles.</div>
       </div>
 
-      <!-- Playergoal -->
-      <div class="script-card">
-        <div class="script-card-img">
-          <span>📈</span>
-          <div class="script-card-badge">GRATIS</div>
-          <div class="script-card-tag">📈 Playergoal</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="faqToggle(this)">
+          Can this improve my Wi-Fi connection?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
-        <div class="script-card-body">
-          <div class="script-card-title">Playergoal Tracker</div>
-          <div class="script-card-desc">Track speler voortgang met missies, achievements en XP rewards voor gemotiveerde spelers.</div>
-          <div class="script-card-footer">
-            <div class="script-price free">Gratis</div>
-            <a href="https://discord.gg/" target="_blank" class="btn-order claim">🎁 Claim</a>
-          </div>
-        </div>
+        <div class="faq-a">It helps — but for best results, use a wired (Ethernet) connection. The tweaks will still improve consistency and reduce jitter over Wi-Fi, though.</div>
       </div>
 
-      <!-- Event Script -->
-      <div class="script-card">
-        <div class="script-card-img">
-          <span>🎉</span>
-          <div class="script-card-badge">GRATIS</div>
-          <div class="script-card-tag">🎉 Event Script</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="faqToggle(this)">
+          Are tweaks bad for long-term use?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
         </div>
-        <div class="script-card-body">
-          <div class="script-card-title">Event Script</div>
-          <div class="script-card-desc">Automatische events met races, team battles en reward distributie voor engaged community.</div>
-          <div class="script-card-footer">
-            <div class="script-price free">Gratis</div>
-            <a href="https://discord.gg/" target="_blank" class="btn-order claim">🎁 Claim</a>
-          </div>
-        </div>
+        <div class="faq-a">We take pride in providing stability and reliability for our customers. We don't do anything extreme that could damage your console or shorten its lifespan. All tweaks are safe for long-term use.</div>
       </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="faqToggle(this)">
+          Is it safe to use?
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </div>
+        <div class="faq-a">Absolutely. All tweaks have been carefully developed with a strong focus on both performance and safety. Each release is thoroughly tested to ensure it does not interfere with core system files or introduce any risks. You can use them with full confidence — they are safe, effective, and reliable.</div>
+      </div>
+
     </div>
   </div>
 </div>
 
-<!-- ══ SERVERS PAGE ══ -->
-<div id="page-servers" class="page">
-  <div class="servers-section">
-    <div class="server-hero-card">
-      <div class="section-eyebrow" style="text-align:center">FiveM Hosting</div>
-      <h1 style="font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,56px); font-weight:800; letter-spacing:-1.5px; color:white; margin-bottom:16px; position:relative">
-        Raytrix Server Hosting
-      </h1>
-      <p style="color:var(--muted); max-width:520px; margin:0 auto 32px; font-size:15px; line-height:1.7; position:relative">
-        Krachtige, stabiele FiveM servers met 99% uptime garantie. Volledig beheerd, direct online. Wij regelen alles van setup tot onderhoud.
-      </p>
-      <a href="https://discord.gg/" target="_blank" class="btn-primary" style="font-size:15px; padding:13px 28px; position:relative">
-        <svg width="16" height="16" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.6a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.8 37.8 0 0 0 25.4.7a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 4.9a.2.2 0 0 0-.1.1C1.5 18.2-.9 31.1.3 43.8a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.5 5.3 24 5.3 35.3 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36.2 36.2 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1C73 29.1 69.3 16.2 60.2 5a.2.2 0 0 0-.1-.1ZM23.7 36.3c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
-        Server aanvragen
-      </a>
+<!-- ════════════ TOS ════════════ -->
+<div class="page" id="pg-tos">
+  <div class="tos-wrap">
+    <div class="eyebrow">Legal</div>
+    <h2 class="sec-title">Terms of Service</h2>
+    <p class="sec-sub">By purchasing or using any tweak from VizzTweaks, you agree to the following terms.</p>
+
+    <div class="tos-divider"></div>
+
+    <div class="tos-section">
+      <h3>1. General</h3>
+      <p>VizzTweaks provides console optimization tweaks for PS5, PS4 and Xbox. By accessing our services — whether free or paid — you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
     </div>
 
-    <div class="section-eyebrow">Wat wij bieden</div>
-    <h2 class="section-title">Alles inbegrepen</h2>
-    <p class="section-sub">Van initiële setup tot dagelijks beheer — wij zorgen dat jouw server altijd draait.</p>
+    <div class="tos-section">
+      <h3>2. Free Tweaks</h3>
+      <p>Free tweaks represent approximately 5% of our full paid pack. They are provided as-is with no guarantee of performance or compatibility. VizzTweaks takes no responsibility for any issues arising from use of free tweaks. To access free tweaks, you must complete the required steps in our Discord server.</p>
+    </div>
 
-    <div class="server-grid">
-      <div class="server-card">
-        <div class="server-card-icon">⚙️</div>
-        <div class="server-card-title">Volledige Setup</div>
-        <div class="server-card-desc">Wij installeren en configureren jouw FiveM server van A tot Z. Framework keuze, scripts, database — alles geregeld.</div>
-      </div>
-      <div class="server-card">
-        <div class="server-card-icon">🛡️</div>
-        <div class="server-card-title">Anti-Cheat Integratie</div>
-        <div class="server-card-desc">Bescherm jouw community met onze bewezen anti-cheat oplossing. Automatische bans, logging en rapportage.</div>
-      </div>
-      <div class="server-card">
-        <div class="server-card-icon">📊</div>
-        <div class="server-card-title">Performance Monitoring</div>
-        <div class="server-card-desc">Real-time inzicht in server performance. Automatische restarts en proactieve monitoring 24/7.</div>
-      </div>
-      <div class="server-card">
-        <div class="server-card-icon">🔧</div>
-        <div class="server-card-title">Onderhoud & Updates</div>
-        <div class="server-card-desc">Wij zorgen dat alle scripts en het framework up-to-date blijven. Geen gedoe voor jou.</div>
-      </div>
-      <div class="server-card">
-        <div class="server-card-icon">💬</div>
-        <div class="server-card-title">Discord Integratie</div>
-        <div class="server-card-desc">Koppel jouw server direct aan Discord. Automatische rollen, logs en aankondigingen via onze bot.</div>
-      </div>
-      <div class="server-card">
-        <div class="server-card-icon">🚀</div>
-        <div class="server-card-title">Snelle Levering</div>
-        <div class="server-card-desc">Jouw server is binnen 24 uur live. Wij werken snel en professioneel zodat jij meteen kunt beginnen.</div>
-      </div>
+    <div class="tos-section">
+      <h3>3. Paid Tweaks</h3>
+      <p>Paid tweaks come with a full working guarantee. If a paid tweak does not work on your console, we will resolve the issue or provide a solution. The following applies to all paid orders:</p>
+      <ul>
+        <li>Payment is processed via Discord ticket</li>
+        <li>Delivery is handled directly in your ticket</li>
+        <li>Refunds are only issued if we are unable to deliver a working solution</li>
+        <li>Do not share, resell or redistribute paid tweaks</li>
+      </ul>
+    </div>
+
+    <div class="tos-section">
+      <h3>4. User Responsibilities</h3>
+      <p>You are responsible for correctly applying the tweaks to your console. VizzTweaks is not liable for any issues caused by incorrect application, third-party software conflicts, or hardware limitations outside of our control.</p>
+    </div>
+
+    <div class="tos-section">
+      <h3>5. Prohibited Use</h3>
+      <p>You may not resell, redistribute, copy or claim ownership of any VizzTweaks content. Doing so may result in a permanent ban from our services and Discord server.</p>
+    </div>
+
+    <div class="tos-section">
+      <h3>6. Changes to Terms</h3>
+      <p>VizzTweaks reserves the right to update these terms at any time. Continued use of our services after changes are posted constitutes acceptance of the updated terms.</p>
+    </div>
+
+    <div class="tos-section">
+      <h3>7. Contact</h3>
+      <p>For any questions about these terms, open a ticket in our <a href="https://discord.gg/GBHusvCTRc" target="_blank" style="color:#00b4ff;text-decoration:none">Discord server</a>.</p>
     </div>
   </div>
 </div>
 
 <footer>
-  © 2025 <span>Raytrix</span> — Premium Digital Solutions · raytrix.nl
+  <div class="foot-name">Vizz<em>Tweaks</em></div>
+  <div style="font-size:12.5px;color:#0d2033;margin-top:6px">© 2025 VizzTweaks — Premium Console Tweaks</div>
+  <div style="font-size:12.5px;color:#0d2033;margin-top:3px">Follow us on TikTok @love4vizz</div>
 </footer>
 
 <script>
-  function showPage(id, el) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + id).classList.add('active');
-    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-    if (el) el.classList.add('active');
-    window.scrollTo(0, 0);
-  }
+function faqToggle(el) {
+  var item = el.parentElement;
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
 
-  function toggleFeature(el) {
-    el.classList.toggle('open');
-  }
+function goPage(e, page) {
+  e.preventDefault();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.getElementById('pg-' + page).classList.add('on');
+  document.querySelectorAll('.nav-tab').forEach(a => a.classList.remove('on'));
+  var tab = document.getElementById('nt-' + page);
+  if (tab) tab.classList.add('on');
+  window.scrollTo(0, 0);
+}
 </script>
 </body>
 </html>
